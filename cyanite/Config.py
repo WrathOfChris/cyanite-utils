@@ -1,4 +1,5 @@
 import yaml
+import time
 
 class Config():
     """
@@ -7,6 +8,7 @@ class Config():
 
     def __init__(self, config_file):
         self.config_file = config_file
+        self.verboseflag = False
         try:
             with open(config_file, 'r') as f:
                 self.config = yaml.load(f)
@@ -41,3 +43,14 @@ class Config():
                 for r in self.config['carbon']['rollups']:
                     rollups.append((r['period'], r['rollup']))
         return rollups
+
+    def timefrom(self):
+        now = int(time.time())
+        #return now - (86400 * 3)
+        return now - (86400 * 1)
+
+    def verbose(self):
+        return self.verboseflag
+
+    def setverbose(self):
+        self.verboseflag = True

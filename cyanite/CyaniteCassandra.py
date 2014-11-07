@@ -26,5 +26,7 @@ class CyaniteCassandra():
             print "cannot delete without rollups defined in config"
             sys.exit(1)
         for (rollup, interval) in rollups:
+            print "deleting %s rollup %d interval %d" % (
+                    metric, rollup, interval)
             rows = self.session.execute(self.deletequery,
                     (rollup, interval, metric))

@@ -30,6 +30,12 @@ def common_parser(description='untitled'):
         default='localhost',
         help='Cassandra hostname')
 
+    parser.add_argument(
+        '-v', '--verbose',
+        default=False,
+        action='store_true',
+        help='verbose')
+
     return parser
 
 import signal
