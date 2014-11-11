@@ -56,6 +56,11 @@ def cyanite_prune():
     parser = common_parser('Prune metrics')
 
     parser.add_argument(
+        '-s', '--seconds',
+        default='101520',
+        help='seconds of inactivity to prune')
+
+    parser.add_argument(
         'metric',
         metavar='METRIC',
         nargs='*',
@@ -66,6 +71,8 @@ def cyanite_prune():
     config = Config(args.config_file)
     if args.verbose:
         config.setverbose()
+    if args.seconds:
+        config.settimefrom(args.seconds)
 
     metrics = CyaniteMetrics(config)
 

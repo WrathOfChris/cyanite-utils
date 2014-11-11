@@ -14,6 +14,7 @@ class Config():
                 self.config = yaml.load(f)
         except IOError:
             self.config = dict()
+        self.timewindow = 86400 * 3
 
     def cluster(self):
         if 'store' in self.config:
@@ -46,8 +47,10 @@ class Config():
 
     def timefrom(self):
         now = int(time.time())
-        #return now - (86400 * 3)
-        return now - (86400 * 1)
+        return now - self.timewindow
+
+    def settimefrom(self, timewindow):
+        self.timewindow = int(timewindow)
 
     def verbose(self):
         return self.verboseflag
