@@ -3,7 +3,8 @@ import argparse
 from .Config import Config
 from .CyaniteCassandra import CyaniteCassandra
 from .CyaniteMetrics import CyaniteMetrics
-from .util import common_parser, get_paths, print_paths, catch_sigint
+from .CyanitePaths import CyanitePaths
+from .util import common_parser, catch_sigint
 
 def cyanite_list():
     catch_sigint()
@@ -21,11 +22,13 @@ def cyanite_list():
     if args.verbose:
         config.setverbose()
 
+    paths = CyanitePaths(config)
+
     if len(args.metric) == 0:
-        print_paths(config, '*')
+        paths.printpaths('*')
     else:
         for metric in args.metric:
-            print_paths(config, metric)
+            paths.printpaths(metric)
 
 def cyanite_delete():
     catch_sigint()
