@@ -50,7 +50,7 @@ class CyanitePaths():
     def delete(self, path):
         ret = list()
         if self.config.verbose():
-            print "delete %s" % path
+            print "delete path %s" % path
         url = "%s/path/%s" % (self.esurl, path)
 
         opener = urllib2.build_opener(urllib2.HTTPHandler)
@@ -60,7 +60,7 @@ class CyanitePaths():
             response = urllib2.urlopen(req)
         except urllib2.HTTPError, err:
             if err.code == 404:
-                print "delete %s path does not exist" % path
+                print "delete path %s does not exist" % path
                 return False
             else:
                 raise

@@ -15,6 +15,7 @@ class CyaniteMetrics():
                 self.config.httphost(),
                 self.config.httpport())
         self.cyanite = None
+        self.paths = None
         self.maxrollup = 0
         for (rollup, interval) in self.config.rollups():
             if rollup * interval > self.maxrollup:
@@ -36,6 +37,8 @@ class CyaniteMetrics():
         # open Cassandra connection
         if not self.cyanite:
             self.cyanite = CyaniteCassandra(self.config)
+        if not self.paths:
+            self.paths = CyanitePaths(self.config)
 
         if not timefrom:
             timefrom = self.config.timefrom()
@@ -51,4 +54,5 @@ class CyaniteMetrics():
                 return True
             if 'series' in alldata and len(alldata['series']) > 0:
                 self.cyanite.delete(path)
+                self.paths.delete(path)
         return True
