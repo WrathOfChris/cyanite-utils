@@ -10,7 +10,7 @@ setup(
     author_email="chris@wrathofchris.com",
     description="Cyanite Utils",
     url = "https://github.com/WrathOfChris/cyanite-utils",
-    download_url = 'https://github.com/WrathOfChris/cyanite-utils/tarball/0.0.2',
+    download_url = 'https://github.com/WrathOfChris/cyanite-utils/tarball/0.0.3',
     license="Apache",
     include_package_data=True,
     packages=find_packages(),
