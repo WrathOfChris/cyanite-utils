@@ -3,6 +3,7 @@ import json
 import urllib2
 from .Config import Config
 from .CyaniteCassandra import CyaniteCassandra
+from .CyanitePaths import CyanitePaths
 
 class CyaniteMetrics():
     """
@@ -44,6 +45,8 @@ class CyaniteMetrics():
             timefrom = self.config.timefrom()
         data = self.get(path, timefrom=timefrom)
         if not data:
+            # no recent data, prune the path
+            self.paths.delete(path)
             return False
         if 'series' in data and len(data['series']) == 0:
             maxrollup = data['to'] - self.maxrollup
@@ -51,8 +54,10 @@ class CyaniteMetrics():
                 print "prune %s" % path
             alldata = self.get(path, timefrom=maxrollup, timeto=data['to'])
             if not data:
+                # no data at all, prune the path
+                self.paths.delete(path)
                 return True
             if 'series' in alldata and len(alldata['series']) > 0:
                 self.cyanite.delete(path)
-                self.paths.delete(path)
+            self.paths.delete(path)
         return True
