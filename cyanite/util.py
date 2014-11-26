@@ -36,6 +36,16 @@ def common_parser(description='untitled'):
         action='store_true',
         help='verbose')
 
+    parser.add_argument(
+        '--es-url',
+        default='http://localhost:9200',
+        help='Elasticsearch http port')
+
+    parser.add_argument(
+        '--es-index',
+        default='cyanite_paths',
+        help='Elasticsearch index')
+
     return parser
 
 import signal

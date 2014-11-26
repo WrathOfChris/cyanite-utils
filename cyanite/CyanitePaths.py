@@ -13,6 +13,9 @@ class CyanitePaths():
         self.url = "http://%s:%s/paths" % (
                 self.config.httphost(),
                 self.config.httpport())
+        self.esurl = "%s/%s" % (
+                self.config.esurl(),
+                self.config.esindex())
         self.cyanite = None
 
     def get(self, path):
@@ -42,3 +45,28 @@ class CyanitePaths():
                 print path['path']
             else:
                 self.printpaths("%s.*" % path['path'])
+
+    # delete a path from elasticsearch
+    def delete(self, path):
+        ret = list()
+        if self.config.verbose():
+            print "delete %s" % path
+        url = "%s/path/%s" % (self.esurl, path)
+
+        opener = urllib2.build_opener(urllib2.HTTPHandler)
+        req = urllib2.Request(url)
+        req.get_method = lambda: 'DELETE'
+        try:
+            response = urllib2.urlopen(req)
+        except urllib2.HTTPError, err:
+            if err.code == 404:
+                print "delete %s path does not exist" % path
+                return False
+            else:
+                raise
+        data = json.loads(response.read())
+        if not data:
+            return False
+        if 'found' in data and data['found']:
+            return True
+        return False

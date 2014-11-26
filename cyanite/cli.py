@@ -47,9 +47,11 @@ def cyanite_delete():
         config.setverbose()
 
     cyanite = CyaniteCassandra(config)
+    paths = CyanitePaths(config)
 
     for metric in args.metric:
         cyanite.delete(metric)
+        paths.delete(metric)
 
 def cyanite_prune():
     catch_sigint()

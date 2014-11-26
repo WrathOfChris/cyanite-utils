@@ -57,3 +57,15 @@ class Config():
 
     def setverbose(self):
         self.verboseflag = True
+
+    def esurl(self):
+        if 'index' in self.config:
+            if 'url' in self.config['index']:
+                return self.config['index']['url']
+        return 'http://localhost:9200'
+
+    def esindex(self):
+        if 'index' in self.config:
+            if 'index' in self.config['index']:
+                return self.config['index']['index']
+        return 'cyanite_paths'
