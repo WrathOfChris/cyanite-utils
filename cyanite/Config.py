@@ -61,7 +61,7 @@ class Config():
     # True when a REST api index is defined
     def esindex(self):
         if 'index' in self.config:
-            if self.config['index'] == "io.cyanite.es_path/es-rest"
+            if self.config['index'] == "io.cyanite.es_path/es-rest":
                 return True
         return False
 
