@@ -3,7 +3,6 @@ import json
 import urllib2
 from .Config import Config
 from .CyaniteCassandra import CyaniteCassandra
-from .CyanitePaths import CyanitePaths
 
 class CyaniteMetrics():
     """
@@ -40,27 +39,16 @@ class CyaniteMetrics():
         # open Cassandra connection
         if not self.cyanite:
             self.cyanite = CyaniteCassandra(self.config)
-        if not self.paths:
-            self.paths = CyanitePaths(self.config)
 
         if not timefrom:
             timefrom = self.config.timefrom()
         data = self.get(path, timefrom=timefrom)
         if not data:
-            # no recent data, prune the path
-            self.paths.delete(path)
+            # no data, but prune the path
+            sys.stdout.write("%s\n" % path)
+            sys.stdout.flush()
             return False
         if 'series' in data and len(data['series']) == 0:
-            maxrollup = data['to'] - self.maxrollup
-            if self.config.verbose():
-                sys.stderr.write("metric prune %s\n" % path)
-                sys.stderr.flush()
-            alldata = self.get(path, timefrom=maxrollup, timeto=data['to'])
-            if not data:
-                # no data at all, prune the path
-                self.paths.delete(path)
-                return True
-            if 'series' in alldata and len(alldata['series']) > 0:
-                self.cyanite.delete(path)
-            self.paths.delete(path)
+            sys.stdout.write("%s\n" % path)
+            sys.stdout.flush()
         return True

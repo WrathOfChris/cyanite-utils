@@ -6,9 +6,14 @@ def common_parser(description='untitled'):
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument(
-        '-f', '--config-file',
+        '--config-file',
         default='/etc/cyanite.yaml',
         help='Config file to use')
+
+    parser.add_argument(
+        '-f', '--file',
+        default='-',
+        help='Input file')
 
     parser.add_argument(
         '-k', '--keyspace',
