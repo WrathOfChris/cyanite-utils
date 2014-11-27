@@ -57,9 +57,9 @@ def cyanite_delete():
 
     if len(args.metric) == 0:
         for metric in fileinput.input(args.file):
-            cyanite.delete(metric)
+            cyanite.delete(metric.rstrip('\n'))
             if config.esindex():
-                paths.delete(metric)
+                paths.delete(metric.rstrip('\n'))
 
 def cyanite_prune():
     catch_sigint()
@@ -91,4 +91,4 @@ def cyanite_prune():
 
     if len(args.metric) == 0:
         for metric in fileinput.input(args.file):
-            metrics.prune(metric)
+            metrics.prune(metric.rstrip('\n'))
