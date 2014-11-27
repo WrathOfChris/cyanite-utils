@@ -21,7 +21,8 @@ class CyanitePaths():
     def get(self, path):
         ret = list()
         if self.config.verbose():
-            print "query %s" % path
+            sys.stderr.write("path get %s\n" % path)
+            sys.stderr.flush()
         url = "%s?query=%s" % (self.url, path)
         response = urllib2.urlopen(url)
         data = json.loads(response.read())
@@ -42,7 +43,8 @@ class CyanitePaths():
         paths = self.get(path)
         for path in paths:
             if path['leaf']:
-                print path['path']
+                sys.stdout.write("%s\n" % path['path'])
+                sys.stdout.flush()
             else:
                 self.printpaths("%s.*" % path['path'])
 
@@ -50,7 +52,8 @@ class CyanitePaths():
     def delete(self, path):
         ret = list()
         if self.config.verbose():
-            print "delete path %s" % path
+            sys.stderr.write("path delete %s\n" % path)
+            sys.stderr.flush()
         url = "%s/path/%s" % (self.esurl, path)
 
         opener = urllib2.build_opener(urllib2.HTTPHandler)
@@ -60,7 +63,8 @@ class CyanitePaths():
             response = urllib2.urlopen(req)
         except urllib2.HTTPError, err:
             if err.code == 404:
-                print "delete path %s does not exist" % path
+                sys.stderr.write("path delete %s does not exist\n" % path)
+                sys.stderr.flush()
                 return False
             else:
                 raise
