@@ -31,9 +31,6 @@ def cyanite_list():
         for metric in args.metric:
             paths.printpaths(metric)
 
-    for metric in fileinput.input(args.file):
-        paths.printpaths(metric)
-
 def cyanite_delete():
     catch_sigint()
     parser = common_parser('Delete metrics')
@@ -58,10 +55,11 @@ def cyanite_delete():
         if config.esindex():
             paths.delete(metric)
 
-    for metric in fileinput.input(args.file):
-        cyanite.delete(metric)
-        if config.esindex():
-            paths.delete(metric)
+    if len(args.metric) == 0:
+        for metric in fileinput.input(args.file):
+            cyanite.delete(metric)
+            if config.esindex():
+                paths.delete(metric)
 
 def cyanite_prune():
     catch_sigint()
@@ -91,5 +89,6 @@ def cyanite_prune():
     for metric in args.metric:
         metrics.prune(metric)
 
-    for metric in fileinput.input(args.file):
-        metrics.prune(metric)
+    if len(args.metric) == 0:
+        for metric in fileinput.input(args.file):
+            metrics.prune(metric)
