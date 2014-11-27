@@ -1,4 +1,5 @@
 import argparse
+import fileinput
 
 from .Config import Config
 from .CyaniteCassandra import CyaniteCassandra
@@ -51,7 +52,14 @@ def cyanite_delete():
 
     for metric in args.metric:
         cyanite.delete(metric)
-        paths.delete(metric)
+        if config.esindex():
+            paths.delete(metric)
+
+    if len(args.metric) == 0:
+        for metric in fileinput.input(args.file):
+            cyanite.delete(metric.rstrip('\n'))
+            if config.esindex():
+                paths.delete(metric.rstrip('\n'))
 
 def cyanite_prune():
     catch_sigint()
@@ -80,3 +88,7 @@ def cyanite_prune():
 
     for metric in args.metric:
         metrics.prune(metric)
+
+    if len(args.metric) == 0:
+        for metric in fileinput.input(args.file):
+            metrics.prune(metric.rstrip('\n'))

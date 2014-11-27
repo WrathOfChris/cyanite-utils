@@ -23,10 +23,11 @@ class CyaniteCassandra():
     def delete(self, metric):
         rollups = self.config.rollups()
         if len(rollups) == 0:
-            print "cannot delete without rollups defined in config"
+            sys.stderr.write("cassandra cannot delete without rollups defined in config\n")
             sys.exit(1)
         for (rollup, interval) in rollups:
-            print "deleting %s rollup %d interval %d" % (
-                    metric, rollup, interval)
+            sys.stdout.write("metric delete %s rollup %d interval %d\n" % (
+                metric, rollup, interval))
+            sys.stdout.flush()
             rows = self.session.execute(self.deletequery,
                     (rollup, interval, metric))

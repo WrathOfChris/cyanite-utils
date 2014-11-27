@@ -1,9 +1,9 @@
 import time
 import json
 import urllib2
+import sys
 from .Config import Config
 from .CyaniteCassandra import CyaniteCassandra
-from .CyanitePaths import CyanitePaths
 
 class CyaniteMetrics():
     """
@@ -28,7 +28,9 @@ class CyaniteMetrics():
         if not timeto:
             timeto = int(time.time())
         if self.config.verbose():
-            print "get %s from %d to %d" % (path, timefrom, timeto)
+            sys.stderr.write("metric get %s from %d to %d\n" % (
+                path, timefrom, timeto))
+            sys.stderr.flush()
         url = "%s?path=%s&from=%d&to=%d" % (self.url, path, timefrom, timeto)
         response = urllib2.urlopen(url)
         data = json.loads(response.read())
@@ -38,26 +40,16 @@ class CyaniteMetrics():
         # open Cassandra connection
         if not self.cyanite:
             self.cyanite = CyaniteCassandra(self.config)
-        if not self.paths:
-            self.paths = CyanitePaths(self.config)
 
         if not timefrom:
             timefrom = self.config.timefrom()
         data = self.get(path, timefrom=timefrom)
         if not data:
-            # no recent data, prune the path
-            self.paths.delete(path)
+            # no data, but prune the path
+            sys.stdout.write("%s\n" % path)
+            sys.stdout.flush()
             return False
         if 'series' in data and len(data['series']) == 0:
-            maxrollup = data['to'] - self.maxrollup
-            if self.config.verbose():
-                print "prune %s" % path
-            alldata = self.get(path, timefrom=maxrollup, timeto=data['to'])
-            if not data:
-                # no data at all, prune the path
-                self.paths.delete(path)
-                return True
-            if 'series' in alldata and len(alldata['series']) > 0:
-                self.cyanite.delete(path)
-            self.paths.delete(path)
+            sys.stdout.write("%s\n" % path)
+            sys.stdout.flush()
         return True

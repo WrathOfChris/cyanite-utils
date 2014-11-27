@@ -58,6 +58,13 @@ class Config():
     def setverbose(self):
         self.verboseflag = True
 
+    # True when a REST api index is defined
+    def esindex(self):
+        if 'index' in self.config:
+            if self.config['index'] == "io.cyanite.es_path/es-rest":
+                return True
+        return False
+
     def esurl(self):
         if 'index' in self.config:
             if 'url' in self.config['index']:
