@@ -51,7 +51,8 @@ def cyanite_delete():
 
     for metric in args.metric:
         cyanite.delete(metric)
-        paths.delete(metric)
+        if config.esindex():
+            paths.delete(metric)
 
 def cyanite_prune():
     catch_sigint()
