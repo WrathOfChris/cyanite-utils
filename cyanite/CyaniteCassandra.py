@@ -9,7 +9,7 @@ class CyaniteCassandra():
 
     def __init__(self, config):
         self.config = config
-        self.cluster = Cluster([config.cluster()])
+        self.cluster = Cluster(config.cluster())
         self.session = self.cluster.connect(config.keyspace())
         self.deletequery = self.session.prepare(
             """

@@ -17,10 +17,16 @@ class Config():
         self.timewindow = 86400 * 3
 
     def cluster(self):
+        casshosts = []
         if 'store' in self.config:
             if 'cluster' in self.config['store']:
-                return self.config['store']['cluster']
-        return 'localhost'
+                if isinstance(self.config['store']['cluster'], basestring):
+                    casshosts.append(self.config['store']['cluster'])
+                    return casshosts
+                for host in self.config['store']['cluster']:
+                    casshosts.append(host)
+                return casshosts
+        return ['localhost']
 
     def keyspace(self):
         if 'store' in self.config:
