@@ -1,4 +1,5 @@
 from cassandra.cluster import Cluster
+from cassandra.auth import PlainTextAuthProvider
 from .Config import Config
 import sys
 
@@ -9,7 +10,16 @@ class CyaniteCassandra():
 
     def __init__(self, config):
         self.config = config
-        self.cluster = Cluster(config.cluster())
+        auth_provider = None
+        if config.clusteruser():
+            auth_provider = PlainTextAuthProvider(
+                    username=config.clusteruser(),
+                    password=config.clusterpass()
+                    )
+        self.cluster = Cluster(
+                config.cluster(),
+                auth_provider=auth_provider
+                )
         self.session = self.cluster.connect(config.keyspace())
         self.deletequery = self.session.prepare(
             """
