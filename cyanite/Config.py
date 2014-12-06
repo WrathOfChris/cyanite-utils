@@ -28,6 +28,18 @@ class Config():
                 return casshosts
         return ['localhost']
 
+    def clusteruser(self):
+        if 'store' in self.config:
+            if 'username' in self.config['store']:
+                return self.config['store']['username']
+        return None
+
+    def clusterpass(self):
+        if 'store' in self.config:
+            if 'password' in self.config['store']:
+                return self.config['store']['password']
+        return None
+
     def keyspace(self):
         if 'store' in self.config:
             if 'keyspace' in self.config['store']:
