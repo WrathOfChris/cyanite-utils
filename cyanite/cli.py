@@ -52,13 +52,13 @@ def cyanite_delete():
 
     for metric in args.metric:
         cyanite.delete(metric)
-        if config.esindex():
+        if config.espathindex():
             paths.delete(metric)
 
     if len(args.metric) == 0:
         for metric in fileinput.input(args.file):
             cyanite.delete(metric.rstrip('\n'))
-            if config.esindex():
+            if config.espathindex():
                 paths.delete(metric.rstrip('\n'))
 
 def cyanite_prune():
