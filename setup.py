@@ -10,7 +10,7 @@ setup(
     author_email="chris@wrathofchris.com",
     description="Cyanite Utils",
     url = "https://github.com/WrathOfChris/cyanite-utils",
-    download_url = 'https://github.com/WrathOfChris/cyanite-utils/tarball/0.0.8',
+    download_url = 'https://github.com/WrathOfChris/cyanite-utils/tarball/0.0.9',
     license="Apache",
     include_package_data=True,
     packages=find_packages(),
@@ -20,9 +20,9 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "cyanite-list = cyanite.cli:cyanite_list",
-            "cyanite-prune = cyanite.cli:cyanite_prune",
-            "cyanite-delete = cyanite.cli:cyanite_delete"
+            "cyanite-list = cyanite_utils.cli:cyanite_list",
+            "cyanite-prune = cyanite_utils.cli:cyanite_prune",
+            "cyanite-delete = cyanite_utils.cli:cyanite_delete"
         ]
     }
 )
