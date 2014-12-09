@@ -1,6 +1,6 @@
 import os
 import re
-from cyanite import __version__
+from cyanite_utils import __version__
 from setuptools import setup, find_packages
 
 setup(
@@ -10,7 +10,7 @@ setup(
     author_email="chris@wrathofchris.com",
     description="Cyanite Utils",
     url = "https://github.com/WrathOfChris/cyanite-utils",
-    download_url = 'https://github.com/WrathOfChris/cyanite-utils/tarball/0.0.9',
+    download_url = 'https://github.com/WrathOfChris/cyanite-utils/tarball/0.0.10',
     license="Apache",
     include_package_data=True,
     packages=find_packages(),
