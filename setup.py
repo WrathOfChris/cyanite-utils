@@ -16,6 +16,10 @@ setup(
     packages=find_packages(),
     install_requires=[
         'PyYAML',
+        'futures',
+        'six',
+        'blist',
+        'lz4',
         'cassandra-driver'
     ],
     entry_points={
