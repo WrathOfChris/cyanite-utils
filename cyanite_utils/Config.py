@@ -60,8 +60,32 @@ class Config():
         if 'carbon' in self.config:
             if 'rollups' in self.config['carbon']:
                 for r in self.config['carbon']['rollups']:
-                    rollups.append((r['period'], r['rollup']))
+                    if 'period' in r:
+                        rollups.append((r['period'], r['rollup']))
+                    else:
+                        rollups.append(self._convert_shorthand_rollup(r[0]))
         return rollups
+
+    def _convert_shorthand_rollup(shorthand_rollup, self):
+        rollup, period = shorthand_rollup.split(':')
+        return (self._to_seconds(period), self._to_seconds(rollup))
+
+    def _to_seconds(value, self):
+        quantity = value[-1:]
+        val = int(value[:-1])
+
+        if quantity == 's':
+            return val
+        elif quantity == 'm':
+            return val*60
+        elif quantity == 'h':
+            return val*60*60
+        elif quantity == 'd':
+            return val*60*60*24
+        elif quantity == 'w':
+            return val*60*60*24*7
+        elif quantity == 'y':
+            return val*60*60*24*365
 
     def timefrom(self):
         now = int(time.time())
