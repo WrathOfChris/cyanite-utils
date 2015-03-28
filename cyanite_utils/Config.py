@@ -66,11 +66,11 @@ class Config():
                         rollups.append(self._convert_shorthand_rollup(r))
         return rollups
 
-    def _convert_shorthand_rollup(shorthand_rollup, self):
+    def _convert_shorthand_rollup(self, shorthand_rollup):
         rollup, period = shorthand_rollup.split(':')
         return (self._to_seconds(period), self._to_seconds(rollup))
 
-    def _to_seconds(value, self):
+    def _to_seconds(self, value):
         quantity = value[-1:]
         val = int(value[:-1])
 
