@@ -63,7 +63,7 @@ class Config():
                     if 'period' in r:
                         rollups.append((r['period'], r['rollup']))
                     else:
-                        rollups.append(self._convert_shorthand_rollup(r[0]))
+                        rollups.append(self._convert_shorthand_rollup(r))
         return rollups
 
     def _convert_shorthand_rollup(shorthand_rollup, self):
