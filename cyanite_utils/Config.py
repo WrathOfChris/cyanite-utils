@@ -48,8 +48,8 @@ class Config():
 
     def httphost(self):
         if 'http' in self.config:
-             if 'host' in self.config['http']:
-                 return self.config['http']['host']
+            if 'host' in self.config['http']:
+                return self.config['http']['host']
         return 'localhost'
 
     def httpport(self):
