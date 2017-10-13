@@ -62,7 +62,7 @@ class CyanitePaths():
         req.get_method = lambda: 'DELETE'
         try:
             response = urllib2.urlopen(req)
-        except urllib2.HTTPError, err:
+        except urllib2.HTTPError as err:
             if err.code == 404:
                 sys.stderr.write("path delete %s does not exist\n" % path)
                 sys.stderr.flush()
