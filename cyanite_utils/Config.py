@@ -107,7 +107,7 @@ class Config():
     def espathindex(self):
         if 'index' in self.config:
             if 'use' in self.config['index']:
-                if self.config['index']['use'] == "io.cyanite.es_path/es-rest":
+                if self.config['index']['use'] == "io.cyanite.es_path/es-rest" or self.config['index']['use'] == "org.spootnik.cyanite.es_path/es-rest":
                     return True
         return False
 
